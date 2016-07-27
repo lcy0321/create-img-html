@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+	<meta charset="UTF-8">
+	<title>${title}</title>
+	<style>
+		img {
+			width: 100%
+		}
+		p {
+			width: ${width}px;
+			margin: auto;
+			resize: horizontal;
+			overflow: auto;
+			text-align: center;
+		}
+	</style>
+	<script>
+		var setImgWidth = function() {
+			var input = document.getElementById("inputWidth").value;
+			if(!isNaN(input) && input >= 300) {
+				var img = document.getElementsByTagName("p");
+				for(i = 0; i < img.length; ++i) {
+					img[i].style.width = input + "px";
+				}
+			}
+		};
+		window.onload = function() {
+			document.getElementById("inputWidth").onchange = setImgWidth;
+		};
+	</script>
+</head>
+<body>
+<p id="imgWidth" style="resize:none">
+	<input id="inputWidth" type="number" min=300 step=50 value=${width}>
+</p>
+% for filename in img_list:
+	<p><img src="${filename}" alt="${filename}"><br/></p>
+% endfor
+</body>
+
+</html>
