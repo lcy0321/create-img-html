@@ -6,9 +6,9 @@
 This script create a html file that shows the images in the specified
 directory.
 
-usage: create_img_list_html.py [-h] [-t TITLE] [-w WIDTH] [-e [EXT [EXT ...]]]
-                               [-T TEMPLATE] [-o OUTPUT]
-                               [path]
+usage: create_img_html.py [-h] [-t TITLE] [-w WIDTH] [-e [EXT [EXT ...]]]
+                          [-T TEMPLATE] [-o OUTPUT]
+                          [path]
 """
 from __future__ import print_function
 from __future__ import unicode_literals
