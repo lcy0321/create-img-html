@@ -32,8 +32,7 @@ def get_img_list(path, ext_name):
 
     """
     img_list = []
-    img_path = Path(path)
-    for file in img_path.iterdir():
+    for file in path.iterdir():
         if file.suffix in ext_name:
             img_list.append(file.name)
     return img_list
@@ -72,24 +71,29 @@ def main():
         formatter_class=ArgumentDefaultsHelpFormatter,
         description='Create a html file that shows the images.')
     parser.add_argument('path', default='.', nargs='?',
-                        help='path that contains the images')
+                        help='path that contains the images (default: %(default)s)')
     parser.add_argument('-t', '--title', default='View',
-                        help='title of the html file')
+                        help='title of the html file (default: %(default)s)')
     parser.add_argument('-w', '--width', type=int, default='800',
-                        help='width of the image in the html file')
+                        help='width of the image in the html file (default: %(default)s)')
     parser.add_argument('-e', '--ext', nargs='*', default=['jpg', 'png'],
-                        help='extension names of the images')
+                        help='extension names of the images (default: %(default)s)')
     parser.add_argument('-T', '--template', default='template.html',
-                        help='the template file of the html')
-    parser.add_argument('-o', '--output', default='View.html',
-                        help='the output file name')
+                        help='the template file of the html (default: %(default)s)')
+    parser.add_argument('-o', '--output',
+                        help='the output file name (default: <Original Path>/View.html)')
 
     args = parser.parse_args()
     args.ext = ['.' + ext_name for ext_name in args.ext]    #add '.' to ext
 
-    img_list = get_img_list(args.path, args.ext)
+    path = Path(args.path)
+
+    img_list = get_img_list(path, args.ext)
     img_html = create_html(img_list, args.title, args.width, args.template)
-    with open(args.output, 'w', encoding='utf-8', newline='') as output:
+
+    output_path = args.output or path / 'View.html'
+
+    with open(output_path, 'w', encoding='utf-8', newline='') as output:
         output.write(img_html)
 
 if __name__ == '__main__':
